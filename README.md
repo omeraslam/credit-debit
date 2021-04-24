@@ -7,19 +7,19 @@
  http://localhost:3000/explorer/
 
 # Available API Endpoints: 
-1. POST /login/ 
+1. *POST /login* 
 Login with an Email returns an accountId
 
-3. POST /transactions/
+3. *POST /transactions*
 Create Transaction (credit or bebit with an amount for an account)
 
-6. GET /transactions/
+6. *GET /transactions*
 List All Transactions by account id
 
-8. GET /accounts/{id}/balance
+8. *GET /accounts/{id}/balance*
 Get Current Account Balance  
 
-10. GET /transactions/{uuid}
+10. *GET /transactions/{uuid}*
 Get specific transaction by uuid
 
 # Error Code:
