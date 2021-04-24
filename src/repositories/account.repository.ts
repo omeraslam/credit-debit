@@ -65,7 +65,7 @@ export class AccountRepository extends DefaultCrudRepository<
   }
 
   /** if some commit operation is going on */
-  async verifyTransactionable(accountId: number): Promise<void> {
+  async verifyNotLocked(accountId: number): Promise<void> {
     const account = await this.findOne({
       where: {
         id: accountId,
@@ -75,7 +75,7 @@ export class AccountRepository extends DefaultCrudRepository<
 
     if (!account)
       throw new HttpErrors.UnprocessableEntity(
-        'Some commit operation is going on.',
+        'Some commit operation is going on. Please try again',
       );
   }
 

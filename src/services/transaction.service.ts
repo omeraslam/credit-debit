@@ -13,7 +13,7 @@ export class TransactionService {
     private accountRepository: AccountRepository,
     @repository(TransactionRepository)
     private transactionRepository: TransactionRepository,
-  ) {}
+  ) { }
 
   async create(
     account: Account,
@@ -22,7 +22,7 @@ export class TransactionService {
     if (transaction.type === TransactionType.debit)
       await this.accountRepository.verifyDebit(account.id, transaction.amount);
 
-    await this.accountRepository.verifyTransactionable(account.id);
+    await this.accountRepository.verifyNotLocked(account.id);
     await this.accountRepository.updateAccount(account.id, AccountState.locked);
     const newTransaction = await this.transactionRepository.createTransaction(
       transaction,
@@ -41,6 +41,7 @@ export class TransactionService {
   }
 
   async list(account: Account): Promise<Transaction[]> {
+    await this.accountRepository.verifyNotLocked(account.id);
     return this.transactionRepository.listTransactions(account.id);
   }
 

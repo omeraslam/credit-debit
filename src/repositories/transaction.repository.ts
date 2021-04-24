@@ -2,7 +2,7 @@ import {Getter, inject} from '@loopback/core';
 import {
   BelongsToAccessor,
   DefaultCrudRepository,
-  repository,
+  repository
 } from '@loopback/repository';
 import {HttpErrors} from '@loopback/rest';
 import * as uuid from 'uuid';

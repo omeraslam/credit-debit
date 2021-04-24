@@ -18,16 +18,22 @@ export class TransactionController {
     private accountService: AccountService,
     @service(TransactionService)
     private transactionService: TransactionService,
-  ) {}
+  ) { }
 
   @post('/transactions', {
     responses: {
       '200': {
-        description: 'Transaction model instance',
+        description: 'Create a Debit or Credit transaction',
         content: {
           'application/json': {schema: getModelSchemaRef(TransactionReceipt)},
         },
       },
+      '403': {
+        description: 'Insufficient Balance.',
+      },
+      '409': {
+        description: 'When transaction is in progress',
+      }
     },
   })
   async create(
@@ -48,12 +54,6 @@ export class TransactionController {
     const account = await this.accountService.verifyAccount(
       transaction.accountId,
     );
-
-    // /** below 2 staements are only to test the locked mechanism,
-    // whereas locking logic iss in the service method */
-
-    // await this.accountRepository.updateAccount(account.id, AccountState.locked);
-    // setImmediate(() => {}, 150000);
 
     return this.transactionService.create(account, transaction);
   }
